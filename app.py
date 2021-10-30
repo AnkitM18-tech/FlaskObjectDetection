@@ -51,6 +51,8 @@ def allowed_file(filename):
 def index():
     return render_template('index.html')
 
+
+@app.route('/upload', methods=['POST'])
 def upload():
     file=request.files['file']
     if file and allowed_file(file.filename):
@@ -65,9 +67,9 @@ def uploaded_file(filename):
     IMAGE_SIZE = (12,8)
 
     with detection_graph.as_default():
-        with tf.Session(graph=detection_graph) as sess:
+        with tf.compat.v1.Session(graph=detection_graph) as sess:
             for image_path in TEST_IMAGE_PATHS:
-                image=image.open(image_path)
+                image=Image.open(image_path)
                 image_np = load_image_into_numpy_array(image)
                 image_np_expanded = np.expand_dims(image_np,axis=0)
                 image_tensor = detection_graph.get_tensor_by_name('image_tensor:0')
