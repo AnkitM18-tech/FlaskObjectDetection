@@ -1,0 +1,4 @@
+.vscode
+__pycache__
+*.cfg
+flask-object-detection
