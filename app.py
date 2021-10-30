@@ -23,8 +23,8 @@ NUM_CLASSES = 90
 #Detection
 detection_graph = tf.Graph()
 with detection_graph.as_default():
-    od_graph_def = tf.GraphDef()
-    with tf.gfile.GFile(PATH_TO_CKPT, 'rb') as fid:
+    od_graph_def = tf.compat.v1.GraphDef()
+    with tf.compat.v2.io.gfile.GFile(PATH_TO_CKPT, 'rb') as fid:
         serialized_graph = fid.read()
         od_graph_def.ParseFromString(serialized_graph)
         tf.import_graph_def(od_graph_def, name="")
@@ -83,4 +83,4 @@ def uploaded_file(filename):
     return send_from_directory(app.config["UPLOAD_FOLDER"],filename)
 
 if __name__ == '__main__':
-    app.run(debug=True,host='0.0.0.0',port=5000)
+    app.run(debug=True)
